@@ -30,3 +30,6 @@ yarn-error.log
 
 uploads/
 carGenerated/
+
+yarn.lock
+dist
