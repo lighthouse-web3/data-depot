@@ -1,4 +1,6 @@
 import dbbClient from './ddbClient'
+import { unmarshall } from '@aws-sdk/util-dynamodb'
+import { ScanCommand } from "@aws-sdk/client-dynamodb"
 import { carRecordTable } from '../utils/constants'
 import { DatabaseError } from '../errors'
 
@@ -17,7 +19,7 @@ export default async (pageNo: number) => {
         ExclusiveStartKey: exclusiveStartKey,
       }
 
-      records = await dbbClient.scan(params)
+      records = await dbbClient.send(new ScanCommand(params))
       count += 1
       exclusiveStartKey = records.LastEvaluatedKey
       if (!exclusiveStartKey && pageNo > count) {
@@ -27,7 +29,16 @@ export default async (pageNo: number) => {
         break
       }
     } while (count !== pageNo)
-    return records.Items ?? []
+    
+    const { Items } = records
+    if(!Items){
+      return []
+    }
+
+    for(let i=0; i<Items.length; i++){
+      Items[i] = unmarshall(Items[i])
+    }
+    return Items
   } catch (error) {
     console.log(error)
     throw new DatabaseError()
