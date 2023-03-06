@@ -1,12 +1,12 @@
-const fs = require('fs')
-const chalk = require('chalk')
-const { execute } = require('../../../utils/execute')
-const updateFileRecord = require('../../../databaseOperations/updateFileRecord')
+import fs from 'fs'
+import chalk from 'chalk'
+import { execute } from '../../../utils/execute'
+import updateFileRecord from '../../../databaseOperations/updateFileRecord'
 
-exports.createCar = async (fileId) => {
+export const createCar = async (fileId: any) => {
   const log = console.log
   try {
-    const car = await execute(
+    const car: any = await execute(
       `generate-car --single -i ${process.cwd()}/uploads/${fileId} -o ${process.cwd()}/carGenerated -p ${process.cwd()}`
     )
     const jsonResponse = JSON.parse(car)
