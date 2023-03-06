@@ -2,7 +2,7 @@ import { createCar } from './helper/createCar'
 import { Request, NextFunction, Response } from 'express'
 import createFileRecord from '../../databaseOperations/createFileRecord'
 
-export const upload_multiple_files = async (
+export const upload_files = async (
   req: any,
   res: Response,
   next: NextFunction
