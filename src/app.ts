@@ -3,9 +3,9 @@ import morgan from 'morgan'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import fs from 'fs'
-import fileIntoController from './routes/fileInfo'
-import uploadFileController from './routes/uploadFile'
-import downloadController from './routes/download'
+import fileInfo from './routes/fileInfo'
+import uploadFile from './routes/uploadFile'
+import download from './routes/download'
 import errorHandler from './middleware/error-handler'
 
 const app = express()
@@ -15,9 +15,9 @@ app.use(bodyParser.json())
 app.use(morgan('dev'))
 app.use(cors())
 
-app.use('/api/files', fileIntoController)
-app.use('/api/upload', uploadFileController)
-app.use('/api/download', downloadController)
+app.use('/api/files', fileInfo)
+app.use('/api/upload', uploadFile)
+app.use('/api/download', download)
 
 app.use(errorHandler)
 
