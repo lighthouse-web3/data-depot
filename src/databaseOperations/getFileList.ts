@@ -15,7 +15,7 @@ export default async (pageNo: number) => {
     do {
       const params: any = {
         TableName: carRecordTable,
-        Limit: 2,
+        Limit: 2000,
         ExclusiveStartKey: exclusiveStartKey,
       }
 
