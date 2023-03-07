@@ -29,7 +29,7 @@ export const githubOauthHandler = async (
     }
 
     // Get the user the access_token with the code
-    const { access_token } = await getGithuathToken({ code })
+    const { access_token } = await getGithubOathToken({ code })
 
     // Get the user with the access_token
     const { email, id, login } = await getGithubUser({ access_token })
