@@ -37,16 +37,15 @@ export const githubOauthHandler = async (
     const token = newToken(usersData)
 
     res.cookie('access_token', token, {
+      secure: true,
       httpOnly: false,
-      sameSite: 'none',
-      domain: config.origin,
+      sameSite: 'lax',
     })
     res.cookie('logged_in', true, {
-      sameSite: 'none',
-      domain: config.origin,
+      secure: true,
+      sameSite: 'lax',
       httpOnly: false,
     })
-
     res.redirect(`${config.origin}${pathUrl}`)
   } catch (err: any) {
     return res.redirect(`${config.origin}/oauth/error`)
