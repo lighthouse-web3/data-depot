@@ -1,6 +1,6 @@
 import dbbClient from './ddbClient'
 import { unmarshall } from '@aws-sdk/util-dynamodb'
-import { ScanCommand } from "@aws-sdk/client-dynamodb"
+import { ScanCommand } from '@aws-sdk/client-dynamodb'
 import { carRecordTable } from '../utils/constants'
 import { DatabaseError } from '../errors'
 

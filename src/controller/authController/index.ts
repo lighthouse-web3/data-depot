@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import { CustomError } from '../../errors'
 import config from '../../config'
 import { getGithubOathToken, getGithubUser } from './service'
+import { findAndUpdateUser } from '../../databaseOperations/user'
 
 export const githubOauthHandler = async (
   req: Request,
@@ -28,29 +29,15 @@ export const githubOauthHandler = async (
     }
 
     // Get the user the access_token with the code
-    const { access_token } = await getGithubOathToken({ code })
+    const { access_token } = await getGithuathToken({ code })
 
     // Get the user with the access_token
-    const { email, avatar_url, login } = await getGithubUser({ access_token })
+    const { email, id, login } = await getGithubUser({ access_token })
 
-    // // Create new user or update user if user already exist
-    // const user = await findAndUpdateUser(
-    //   { email },
-    //   {
-    //     email,
-    //     photo: avatar_url,
-    //     name: login,
-    //     provider: 'GitHub',
-    //     verified: true,
-    //   },
-    //   { runValidators: false, new: true, upsert: true }
-    // )
+    // Create new user or update user if user already exist
+    const user = await findAndUpdateUser(email, id, login)
 
-    // if (!user) {
-    //   return res.redirect(`${config.origin}/oauth/error`)
-    // }
-
-    // // Create access and refresh tokens
+    // Create access and refresh tokens
     // const { access_token: accessToken, refresh_token } = await signToken(user)
 
     // res.cookie('access_token', accessToken)
