@@ -36,8 +36,14 @@ export const githubOauthHandler = async (
     // Create access and refresh tokens
     const token = newToken(usersData)
 
-    res.cookie('access_token', token)
+    res.cookie('access_token', token, {
+      httpOnly: false,
+      sameSite: 'none',
+      domain: config.origin,
+    })
     res.cookie('logged_in', true, {
+      sameSite: 'none',
+      domain: config.origin,
       httpOnly: false,
     })
 
