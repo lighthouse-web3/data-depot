@@ -15,6 +15,10 @@ const baseConfig = {
   githubClientId: process.env.GITHUB_OAUTH_CLIENT_ID ?? '',
   githubClientSecret: process.env.GITHUB_OAUTH_CLIENT_SECRET ?? '',
   origin: process.env.GITHUB_OAUTH_CLIENT_SECRET ?? '',
+  secrets: {
+    jwt: process.env.JWT_SECRET ?? '',
+    jwtExp: '20d',
+  },
 }
 
 const envVarsSchema = Joi.object({
@@ -33,6 +37,11 @@ const envVarsSchema = Joi.object({
   }),
   githubClientSecret: Joi.string().required().messages({
     'any.required': `'GITHUB_OAUTH_CLIENT_SECRET IS MISSING'`,
+  }),
+  secrets: Joi.object({
+    jwt: Joi.string().required().messages({
+      'any.required': `'JWT_SECRET IS MISSING'`,
+    }),
   }),
 }).unknown()
 

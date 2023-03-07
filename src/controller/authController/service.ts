@@ -1,6 +1,7 @@
 import axios from 'axios'
 import qs from 'qs'
 import config from '../../config'
+import jwt from 'jsonwebtoken'
 
 type GitHubOauthToken = {
   access_token: string
@@ -40,6 +41,23 @@ interface GitHubUser {
   created_at: Date
   updated_at: Date
 }
+export const newToken = (user: any) => {
+  return jwt.sign(
+    { id: user.id, userName: user.userName },
+    config.secrets.jwt,
+    {
+      expiresIn: config.secrets.jwtExp,
+    }
+  )
+}
+
+export const verifyToken = (token: string) =>
+  new Promise((resolve, reject) => {
+    jwt.verify(token, config.secrets.jwt, (err, payload) => {
+      if (err) return reject(err)
+      resolve(payload)
+    })
+  })
 
 export const getGithubOathToken = async ({
   code,

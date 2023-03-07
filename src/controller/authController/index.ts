@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express'
 import { CustomError } from '../../errors'
 import config from '../../config'
-import { getGithubOathToken, getGithubUser } from './service'
+import { getGithubOathToken, getGithubUser, newToken } from './service'
 import { findAndUpdateUser } from '../../databaseOperations/user'
 
 export const githubOauthHandler = async (
@@ -38,13 +38,12 @@ export const githubOauthHandler = async (
     const user = await findAndUpdateUser(email, id, login)
 
     // Create access and refresh tokens
-    // const { access_token: accessToken, refresh_token } = await signToken(user)
+    const token = await newToken(user)
 
-    // res.cookie('access_token', accessToken)
-    // res.cookie('refresh_token', refresh_token)
-    // res.cookie('logged_in', true, {
-    //   httpOnly: false,
-    // })
+    res.cookie('access_token', token)
+    res.cookie('logged_in', true, {
+      httpOnly: false,
+    })
 
     res.redirect(`${config.origin}${pathUrl}`)
   } catch (err: any) {

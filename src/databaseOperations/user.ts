@@ -1,5 +1,6 @@
 import dbbClient from './ddbClient'
 
+
 export const findAndUpdateUser = async (
   email: string,
   userId: number,
