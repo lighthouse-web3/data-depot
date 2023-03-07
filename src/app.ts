@@ -8,9 +8,11 @@ import uploadFile from './routes/uploadFile'
 import download from './routes/download'
 import errorHandler from './middleware/error-handler'
 import gitHubOauthController from './routes/authGoogle'
+import cookieParser from 'cookie-parser'
 
 const app = express()
 
+app.use(cookieParser)
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(morgan('dev'))
