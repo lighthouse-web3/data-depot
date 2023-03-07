@@ -7,6 +7,7 @@ import fileInfo from './routes/fileInfo'
 import uploadFile from './routes/uploadFile'
 import download from './routes/download'
 import errorHandler from './middleware/error-handler'
+import gitHubOauthController from './routes/authGoogle'
 
 const app = express()
 
@@ -18,6 +19,7 @@ app.use(cors())
 app.use('/api/files', fileInfo)
 app.use('/api/upload', uploadFile)
 app.use('/api/download', download)
+app.use('/api/sessions', gitHubOauthController)
 
 app.use(errorHandler)
 

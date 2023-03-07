@@ -14,7 +14,7 @@ const baseConfig = {
   port: process.env.PORT ?? 8000,
   githubClientId: process.env.GITHUB_OAUTH_CLIENT_ID ?? '',
   githubClientSecret: process.env.GITHUB_OAUTH_CLIENT_SECRET ?? '',
-  origin: process.env.GITHUB_OAUTH_CLIENT_SECRET ?? '',
+  origin: process.env.ORIGIN_URL ?? '',
   secrets: {
     jwt: process.env.JWT_SECRET ?? '',
     jwtExp: '20d',
@@ -42,6 +42,7 @@ const envVarsSchema = Joi.object({
     jwt: Joi.string().required().messages({
       'any.required': `'JWT_SECRET IS MISSING'`,
     }),
+    jwtExp: Joi.string(),
   }),
 }).unknown()
 
