@@ -2,16 +2,18 @@ import express from 'express'
 import validate from '../middleware/validate'
 import validator from '../middleware/validators'
 import {
-  get_file_list,
+  get_user_uploads,
   search_file_by_id,
 } from '../controller/FileDataController'
+import { authenticate } from '../middleware/authenticate'
 
 const router = express.Router()
 
 router.get(
-  '/get_file_list',
+  '/get_user_uploads',
   validate(validator.pageNumberSchema, { query: true }),
-  get_file_list
+  authenticate,
+  get_user_uploads
 )
 
 router.get(
