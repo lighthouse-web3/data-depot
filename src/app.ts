@@ -8,11 +8,9 @@ import uploadFileRouter from './routes/uploadFile'
 import downloadRouter from './routes/download'
 import errorHandler from './middleware/error-handler'
 import authRouter from './routes/auth'
-import cookieParser from 'cookie-parser'
 
 const app = express()
 
-app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(morgan('dev'))
