@@ -31,10 +31,13 @@ export const githubOauthHandler = async (
     const { access_token } = await getGithubOathToken({ code })
 
     // Get the user with the access_token
-    const usersData = await getGithubUser({ access_token })
+    const {avatar_url, login} = await getGithubUser({ access_token })
 
     // Create access and refresh tokens
-    const token = newToken(usersData)
+    const token = newToken({
+      avatarURL: avatar_url,
+      userName: login
+    })
 
     res.cookie('access_token', token, {
       secure: true,
@@ -48,6 +51,20 @@ export const githubOauthHandler = async (
     })
     res.redirect(`${config.origin}${pathUrl}`)
   } catch (err: any) {
-    return res.redirect(`${config.origin}/oauth/error`)
+    res.redirect(`${config.origin}/oauth/error`)
   }
 }
+
+export const logoutHandler = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    res.cookie('access_token', '', { maxAge: 1 });
+    res.cookie('logged_in', '', { maxAge: 1 });
+    res.status(200).json({ status: 'success' });
+  } catch (err: any) {
+    next(err);
+  }
+};
