@@ -12,6 +12,13 @@ const baseConfig = {
   aws_secret_access_key: process.env.AWS_SECRET_ACCESS_KEY ?? '',
   aws_region: process.env.AWS_REGION ?? '',
   port: process.env.PORT ?? 8000,
+  githubClientId: process.env.GITHUB_OAUTH_CLIENT_ID ?? '',
+  githubClientSecret: process.env.GITHUB_OAUTH_CLIENT_SECRET ?? '',
+  origin: process.env.ORIGIN_URL ?? '',
+  secrets: {
+    jwt: process.env.JWT_SECRET ?? '',
+    jwtExp: '20d',
+  },
 }
 
 const envVarsSchema = Joi.object({
@@ -24,6 +31,18 @@ const envVarsSchema = Joi.object({
   }),
   aws_region: Joi.string().required().messages({
     'any.required': `'AWS_REGION IS MISSING'`,
+  }),
+  githubClientId: Joi.string().required().messages({
+    'any.required': `'GITHUB_OAUTH_CLIENT_ID IS MISSING'`,
+  }),
+  githubClientSecret: Joi.string().required().messages({
+    'any.required': `'GITHUB_OAUTH_CLIENT_SECRET IS MISSING'`,
+  }),
+  secrets: Joi.object({
+    jwt: Joi.string().required().messages({
+      'any.required': `'JWT_SECRET IS MISSING'`,
+    }),
+    jwtExp: Joi.string(),
   }),
 }).unknown()
 

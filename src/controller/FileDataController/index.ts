@@ -1,10 +1,10 @@
-import getFileList from '../../databaseOperations/getFileList'
+import getUserUploads from '../../databaseOperations/getUserUploads'
 import searchFileById from '../../databaseOperations/searchFileById'
 import { Response, Request } from 'express'
 
-export const get_file_list = async (req: Request, res: Response) => {
+export const get_user_uploads = async (req: any, res: Response) => {
   try {
-    const fileList = await getFileList(parseInt(req?.query?.pageNo as string))
+    const fileList = await getUserUploads(req.user.userName, parseInt(req?.query?.pageNo as string))
     res.status(200).send(fileList)
   } catch (err) {
     res.status(500)
