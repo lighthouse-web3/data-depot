@@ -43,7 +43,9 @@ interface GitHubUser {
 }
 export const newToken = (user: any) => {
   return jwt.sign(
-    { id: user.id, userName: user.userName },
+    { userName: user.userName,
+      avatarURL: user.avatarURL
+    },
     config.secrets.jwt,
     {
       expiresIn: config.secrets.jwtExp,
