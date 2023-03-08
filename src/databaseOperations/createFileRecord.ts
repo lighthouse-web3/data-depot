@@ -1,8 +1,9 @@
 import dbbClient from './ddbClient'
 import { carRecordTable } from '../utils/constants'
 import { DatabaseError } from '../errors'
+import { fileRecord } from './types'
 
-export default async (record: any) => {
+export default async (record: fileRecord) => {
   try {
     const params = {
       TableName: carRecordTable,
