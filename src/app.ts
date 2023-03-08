@@ -3,25 +3,25 @@ import morgan from 'morgan'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import fs from 'fs'
-import fileInfo from './routes/fileInfo'
-import uploadFile from './routes/uploadFile'
-import download from './routes/download'
+import fileInfoRouter from './routes/fileInfo'
+import uploadFileRouter from './routes/uploadFile'
+import downloadRouter from './routes/download'
 import errorHandler from './middleware/error-handler'
-import gitHubOauthController from './routes/authGoogle'
+import authRouter from './routes/auth'
 import cookieParser from 'cookie-parser'
 
 const app = express()
 
-app.use(cookieParser)
+app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 app.use(morgan('dev'))
 app.use(cors())
 
-app.use('/api/files', fileInfo)
-app.use('/api/upload', uploadFile)
-app.use('/api/download', download)
-app.use('/api/sessions', gitHubOauthController)
+app.use('/api/upload', uploadFileRouter)
+app.use('/api/download', downloadRouter)
+app.use('/api/files', fileInfoRouter)
+app.use('/api/sessions', authRouter)
 app.use(errorHandler)
 
 app.use('/', (req, res) => {
