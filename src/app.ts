@@ -19,7 +19,7 @@ app.use(cors())
 app.use('/api/upload', uploadFileRouter)
 app.use('/api/download', downloadRouter)
 app.use('/api/data', dataRouter)
-app.use('/api/sessions', authRouter)
+app.use('/api/auth', authRouter)
 app.use(errorHandler)
 
 app.use('/', (req, res) => {
