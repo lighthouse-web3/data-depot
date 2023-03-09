@@ -19,3 +19,8 @@ export interface userRecord {
   createdAt: number,
   lastUpdate: number,
 }
+
+export interface userDataUpdate {
+  userName: string,
+  dataUploaded: number,
+}
