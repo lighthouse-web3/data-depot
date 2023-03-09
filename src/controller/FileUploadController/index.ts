@@ -1,5 +1,6 @@
 import { createCar } from './helper/createCar'
 import { NextFunction, Response } from 'express'
+import updateUserData from '../../databaseOperations/updateUserData'
 import createFileRecord from '../../databaseOperations/createFileRecord'
 
 export const upload_files = async (
@@ -23,6 +24,11 @@ export const upload_files = async (
         createdAt: timestamp,
         lastUpdate: timestamp
       }
+      
+      const saveUserData = await updateUserData({
+        userName: req.user.userName,
+        dataUploaded: req.files[i].size,
+      })
       const createRecord = await createFileRecord(record)
       createCar(req.files[i].destination.split('/')[1])
     }
