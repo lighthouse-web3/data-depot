@@ -3,7 +3,7 @@ import morgan from 'morgan'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import fs from 'fs'
-import fileInfoRouter from './routes/fileInfo'
+import dataRouter from './routes/data'
 import uploadFileRouter from './routes/uploadFile'
 import downloadRouter from './routes/download'
 import errorHandler from './middleware/error-handler'
@@ -18,7 +18,7 @@ app.use(cors())
 
 app.use('/api/upload', uploadFileRouter)
 app.use('/api/download', downloadRouter)
-app.use('/api/files', fileInfoRouter)
+app.use('/api/data', dataRouter)
 app.use('/api/sessions', authRouter)
 app.use(errorHandler)
 
