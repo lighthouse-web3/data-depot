@@ -1,6 +1,5 @@
 import { Request, Response, NextFunction } from 'express'
 import { CustomError } from '../../errors'
-import config from '../../config'
 import { getGithubOathToken, getGithubUser, newToken } from './service'
 import createUserRecord from '../../databaseOperations/createUserRecord'
 
@@ -10,14 +9,7 @@ export const githubOauthHandler = async (
   next: NextFunction
 ) => {
   try {
-    // Get the code from the query
     const code = req.query.code as string
-    const pathUrl = (req.query.state as string) ?? '/'
-
-    if (req.query.error) {
-      return res.redirect(`${config.origin}/login`)
-    }
-
     if (!code) {
       return next(
         new CustomError(
@@ -46,32 +38,10 @@ export const githubOauthHandler = async (
       lastUpdate: timeStamp,
     })
 
-    res.cookie('access_token', token, {
-      secure: true,
-      httpOnly: false,
-      sameSite: 'lax',
+    res.status(200).send({
+      access_token: token
     })
-    res.cookie('logged_in', true, {
-      secure: true,
-      sameSite: 'lax',
-      httpOnly: false,
-    })
-    res.redirect(`${config.origin}${pathUrl}`)
   } catch (err: any) {
-    res.redirect(`${config.origin}/oauth/error`)
+    next(err)
   }
 }
-
-export const logoutHandler = async (
-  req: Request,
-  res: Response,
-  next: NextFunction
-) => {
-  try {
-    res.cookie('access_token', '', { maxAge: 1 });
-    res.cookie('logged_in', '', { maxAge: 1 });
-    res.status(200).json({ status: 'success' });
-  } catch (err: any) {
-    next(err);
-  }
-};
