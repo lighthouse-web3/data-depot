@@ -4,7 +4,8 @@ import validator from '../middleware/validators'
 import {
   get_user_uploads,
   search_file_by_id,
-} from '../controller/FileDataController'
+  user_details
+} from '../controller/DataController'
 import { authenticate } from '../middleware/authenticate'
 
 const router = express.Router()
@@ -20,6 +21,12 @@ router.get(
   '/search_file_by_id',
   validate(validator.fileIdSchema, { query: true }),
   search_file_by_id
+)
+
+router.get(
+  '/user_details',
+  authenticate,
+  user_details
 )
 
 export default router
