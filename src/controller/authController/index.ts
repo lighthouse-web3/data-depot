@@ -2,6 +2,7 @@ import { Request, Response, NextFunction } from 'express'
 import { CustomError } from '../../errors'
 import config from '../../config'
 import { getGithubOathToken, getGithubUser, newToken } from './service'
+import createUserRecord from '../../databaseOperations/createUserRecord'
 
 export const githubOauthHandler = async (
   req: Request,
@@ -27,16 +28,22 @@ export const githubOauthHandler = async (
       )
     }
 
-    // Get the user the access_token with the code
     const { access_token } = await getGithubOathToken({ code })
-
-    // Get the user with the access_token
     const {avatar_url, login} = await getGithubUser({ access_token })
 
     // Create access and refresh tokens
     const token = newToken({
       avatarURL: avatar_url,
       userName: login
+    })
+
+    const timeStamp = Date.now()
+    const saveRecord = await createUserRecord({
+      userName: login,
+      dataUploaded: 0,
+      filesUploaded: 0,
+      createdAt: timeStamp,
+      lastUpdate: timeStamp,
     })
 
     res.cookie('access_token', token, {

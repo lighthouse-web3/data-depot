@@ -11,3 +11,11 @@ export interface fileRecord {
   createdAt: number,
   lastUpdate: number,
 }
+
+export interface userRecord {
+  userName: string,
+  dataUploaded: number,
+  filesUploaded: number,
+  createdAt: number,
+  lastUpdate: number,
+}
