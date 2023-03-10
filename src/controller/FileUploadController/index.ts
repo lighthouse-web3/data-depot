@@ -30,7 +30,7 @@ export const upload_files = async (
         dataUploaded: req.files[i].size,
       })
       const createRecord = await createFileRecord(record)
-      createCar(req.files[i].destination.split('/')[1])
+      createCar(req.files[i].destination.split('/')[1], req.files[i].originalname)
     }
 
     res.status(200).send({
