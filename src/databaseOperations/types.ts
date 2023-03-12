@@ -25,3 +25,13 @@ export interface userDataUpdate {
   userName: string,
   dataUploaded: number,
 }
+
+export interface storageUpdate {
+  userName: string,
+  dataCleared: number,
+}
+
+export interface fileStatusUpdate {
+  id: string,
+  fileStatus: string,
+}
