@@ -17,9 +17,15 @@ export default async (userName: String, pageNo: number) => {
         TableName: carRecordTable,
         IndexName: 'userName-index',
         ScanIndexForward: false,
+        FilterExpression: '#fileStatus = :fs1 or #fileStatus = :fs2',
+        ExpressionAttributeNames: {
+          '#fileStatus': 'fileStatus',
+        },
         KeyConditionExpression: 'userName = :u',
         ExpressionAttributeValues: {
             ':u': {S: userName},
+            ':fs1': {S: 'Creating CAR'},
+            ':fs2': {S: 'CAR Created'},
         },
         Limit: 20000,
         ExclusiveStartKey: exclusiveStartKey,
