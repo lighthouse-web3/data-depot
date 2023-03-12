@@ -1,6 +1,7 @@
 import getUserUploads from '../../databaseOperations/getUserUploads'
 import searchFileById from '../../databaseOperations/searchFileById'
-import { Response, Request } from 'express'
+import getUserDetails from '../../databaseOperations/getUserDetails'
+import { Response, Request, NextFunction } from 'express'
 
 export const get_user_uploads = async (req: any, res: Response) => {
   try {
@@ -19,3 +20,16 @@ export const search_file_by_id = async (req: Request, res: Response) => {
     res.status(500)
   }
 }
+
+export const user_details = async (
+  req: any,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const userDetails = await getUserDetails(req.user.userName)
+    res.status(200).json({ data: userDetails });
+  } catch (err: any) {
+    next(err);
+  }
+};
