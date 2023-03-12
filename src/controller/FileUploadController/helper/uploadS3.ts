@@ -20,7 +20,7 @@ export const uploadS3 = async (pieceCID: string) => {
       Body: fileStream
     }
     const data = await s3.upload(uploadParams as any).promise()
-    log(chalk.greenBright("File pushed to bucket") + data.Location)
+    log(chalk.greenBright("File pushed to bucket:") + data.Location)
     return "Success"
   } catch (error) {
     log(chalk.red('Error creating car: ') + error)
