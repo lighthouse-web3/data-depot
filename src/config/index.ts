@@ -15,6 +15,8 @@ const baseConfig = {
   githubClientId: process.env.GITHUB_OAUTH_CLIENT_ID ?? '',
   githubClientSecret: process.env.GITHUB_OAUTH_CLIENT_SECRET ?? '',
   origin: process.env.ORIGIN_URL ?? '',
+  uploadPath: process.env.UPLOAD_PATH ?? '',
+  carPath: process.env.CAR_PATH ?? '',
   secrets: {
     jwt: process.env.JWT_SECRET ?? '',
     jwtExp: '20d',
