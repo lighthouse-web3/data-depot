@@ -36,9 +36,9 @@ export const createCar = async (fileId: string, fileName: string) => {
     })
 
     // Remove Uploaded file
-    fs.rmSync(`${process.cwd()}/uploads/${fileId}`, { recursive: true })
+    fs.rmSync(`${config.uploadPath}/${fileId}`, { recursive: true })
     // Remove car file from disk
-    fs.rmSync(`${process.cwd()}/carGenerated/${jsonResponse['PieceCid']}.car`, { recursive: true })
+    fs.rmSync(`${config.carPath}/${jsonResponse['PieceCid']}.car`, { recursive: true })
     return
   } catch (error) {
     log(chalk.red('Error creating car: ') + error)
