@@ -20,7 +20,7 @@ export const createCar = async (fileId: string, fileName: string) => {
       `stat --format="%s" ${carPathFormat}/${jsonResponse['PieceCid']}.car`
     )
     // // Push CAR to S3
-    const pushToS3 = await uploadS3(jsonResponse['PieceCid'])
+    const pushToS3 = await uploadS3(jsonResponse['PieceCid'], fileId)
     if(!pushToS3){
       throw new Error("Failed to save file to s3")
     }

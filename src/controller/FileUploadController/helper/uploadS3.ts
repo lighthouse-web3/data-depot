@@ -4,7 +4,7 @@ import config from '../../../config'
 import { s3Connect } from './s3Connect'
 import { carFileBucket } from '../../../utils/constants'
 
-export const uploadS3 = async (pieceCID: string) => {
+export const uploadS3 = async (pieceCID: string, fileId: string) => {
   const log = console.log
   try {
     const s3 = await s3Connect();
@@ -16,7 +16,7 @@ export const uploadS3 = async (pieceCID: string) => {
 
     const uploadParams = {
       Bucket: carFileBucket,
-      Key: pieceCID,
+      Key: `${fileId}.car`,
       Body: fileStream
     }
     const data = await s3.upload(uploadParams as any).promise()
