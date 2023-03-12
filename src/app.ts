@@ -7,6 +7,7 @@ import config from './config'
 import dataRouter from './routes/data'
 import uploadFileRouter from './routes/uploadFile'
 import downloadRouter from './routes/download'
+import deleteRouter from './routes/delete'
 import errorHandler from './middleware/error-handler'
 import authRouter from './routes/auth'
 
@@ -19,6 +20,7 @@ app.use(cors())
 
 app.use('/api/upload', uploadFileRouter)
 app.use('/api/download', downloadRouter)
+app.use('/api/delete', deleteRouter)
 app.use('/api/data', dataRouter)
 app.use('/api/auth', authRouter)
 app.use(errorHandler)
