@@ -19,6 +19,7 @@ export const upload_files = async (
         mimeType: req.files[i].mimetype,
         payloadCid: '',
         pieceCid: '',
+        carSize: 0,
         pieceSize: 0,
         fileStatus: 'Creating CAR',
         createdAt: timestamp,
