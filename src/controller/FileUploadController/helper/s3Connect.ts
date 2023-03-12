@@ -1,19 +1,15 @@
 import chalk from 'chalk'
-import AWS from 'aws-sdk'
+import S3 from 'aws-sdk/clients/s3'
 import config from '../../../config'
-import { carFileBucket } from '../../../utils/constants'
 
 export const s3Connect = async () => {
   const log = console.log
   try {
-    AWS.config.update(
-      {
-        accessKeyId: config.aws_access_key_id,
-        secretAccessKey: config.aws_secret_access_key,
-        region: config.aws_region
-      }
-    );
-    const s3 = new AWS.S3({params: {Bucket: carFileBucket}})
+    const s3 = new S3({
+      accessKeyId: config.aws_access_key_id,
+      secretAccessKey: config.aws_secret_access_key,
+      region: config.aws_region
+    })
 
     return s3
   } catch (error) {
