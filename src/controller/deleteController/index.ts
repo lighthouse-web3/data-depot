@@ -23,7 +23,7 @@ export const delete_file = async (req: any, res: Response, next: NextFunction) =
     }
     const params = {
       Bucket: carFileBucket,
-      Key: req.query.fileId
+      Key: `${req.query.fileId}.car`
     };
     const deleteObject = await s3.deleteObject(params as any).promise()
 
@@ -40,7 +40,7 @@ export const delete_file = async (req: any, res: Response, next: NextFunction) =
     })
     res.status(200).send("File deleted successfully")
   } catch (error: any) {
-    console.log(chalk.red(`Error: Failed to download- ${req.query.piece_cid}`))
+    console.log(chalk.red(`Error: Failed to delete- ${error}`))
     next(error)
   }
 }
