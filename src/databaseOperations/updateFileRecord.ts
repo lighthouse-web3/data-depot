@@ -10,12 +10,13 @@ export default async (details: any) => {
         id: details.id,
       },
       UpdateExpression:
-        'set #fileStatus = :f, #payloadCid = :p, #pieceCid = :pi, #pieceSize = :ps, #lastUpdate = :l',
+        'set #fileStatus = :f, #payloadCid = :p, #pieceCid = :pi, #pieceSize = :ps, #carSize = :cs, #lastUpdate = :l',
       ExpressionAttributeValues: {
         ':f': details.fileStatus,
         ':p': details.payloadCid,
         ':pi': details.pieceCid,
         ':ps': details.pieceSize,
+        ':cs': details.carSize,
         ':l': Date.now(),
       },
       ExpressionAttributeNames: {
@@ -23,6 +24,7 @@ export default async (details: any) => {
         '#payloadCid': 'payloadCid',
         '#pieceCid': 'pieceCid',
         '#pieceSize': 'pieceSize',
+        '#carSize': 'carSize',
         '#lastUpdate': 'lastUpdate',
       },
     }
