@@ -5,6 +5,7 @@ export interface fileRecord {
   fileSize: number,
   mimeType: string,
   payloadCid: string,
+  carSize: number,
   pieceCid: string,
   pieceSize: number,
   fileStatus: string,
