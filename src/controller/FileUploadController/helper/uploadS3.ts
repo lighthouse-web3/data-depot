@@ -1,6 +1,8 @@
 import fs from 'fs'
 import chalk from 'chalk'
+import config from '../../../config'
 import { s3Connect } from './s3Connect'
+import { carFileBucket } from '../../../utils/constants'
 
 export const uploadS3 = async (pieceCID: string) => {
   const log = console.log
@@ -10,16 +12,14 @@ export const uploadS3 = async (pieceCID: string) => {
       throw new Error()
     }
 
-    const fileStream = fs.createReadStream(`${process.cwd()}/carGenerated/${pieceCID}`)
-    fileStream.on('error', function(err: any) {
-      throw new Error()
-    })
+    const fileStream = fs.createReadStream(`${config.carPath}/${pieceCID}.car`)
 
     const uploadParams = {
+      Bucket: carFileBucket,
       Key: pieceCID,
       Body: fileStream
     }
-    const data = await s3.upload(uploadParams as any).promise();
+    const data = await s3.upload(uploadParams as any).promise()
     log(chalk.greenBright("File pushed to bucket") + data.Location)
     return "Success"
   } catch (error) {
