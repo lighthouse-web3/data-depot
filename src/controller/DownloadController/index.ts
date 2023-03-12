@@ -10,15 +10,15 @@ export const download_car = async (req: any, res: Response, next: NextFunction) 
       throw new Error()
     }
 
-    res.attachment(req.query.piece_cid)
+    res.attachment(req.query.fileId)
     const options = {
       Bucket: carFileBucket,
-      Key: req.query.piece_cid,
+      Key: req.query.fileId,
     }
     const fileStream = s3.getObject(options).createReadStream()
     fileStream.pipe(res)
   } catch (error: any) {
-    console.log(chalk.red(`Error: Failed to download- ${req.query.piece_cid}`))
+    console.log(chalk.red(`Error: Failed to download- ${req.query.fileId}`))
     next(error)
   }
 }

@@ -7,7 +7,7 @@ const router = express.Router()
 
 router.get(
   '/download_car',
-  validate(validator.pieceCIDSchema, { query: true }),
+  validate(validator.fileIdSchema, { query: true }),
   download_car
 )
 
