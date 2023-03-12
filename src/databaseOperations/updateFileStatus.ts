@@ -1,36 +1,29 @@
 import dbbClient from './ddbClient'
 import { carRecordTable } from '../utils/constants'
 import { DatabaseError } from '../errors'
+import { fileStatusUpdate } from './types'
 
-export default async (details: any) => {
+export default async (updatedDetails: fileStatusUpdate) => {
   try {
     const params = {
       TableName: carRecordTable,
       Key: {
-        id: details.id,
+        id: updatedDetails.id,
       },
       UpdateExpression:
-        'set #fileStatus = :f, #payloadCid = :p, #pieceCid = :pi, #pieceSize = :ps, #carSize = :cs, #lastUpdate = :l',
+        'set #fileStatus = :f, #lastUpdate = :l',
       ExpressionAttributeValues: {
-        ':f': details.fileStatus,
-        ':p': details.payloadCid,
-        ':pi': details.pieceCid,
-        ':ps': details.pieceSize,
-        ':cs': details.carSize,
+        ':f': updatedDetails.fileStatus,
         ':l': Date.now(),
       },
       ExpressionAttributeNames: {
         '#fileStatus': 'fileStatus',
-        '#payloadCid': 'payloadCid',
-        '#pieceCid': 'pieceCid',
-        '#pieceSize': 'pieceSize',
-        '#carSize': 'carSize',
         '#lastUpdate': 'lastUpdate',
       },
     }
 
     await dbbClient.update(params)
-    return 'Update Successful'
+    return 'Put Successful'
   } catch (error) {
     console.log(error)
     throw new DatabaseError()

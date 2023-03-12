@@ -3,9 +3,11 @@ import morgan from 'morgan'
 import cors from 'cors'
 import bodyParser from 'body-parser'
 import fs from 'fs'
+import config from './config'
 import dataRouter from './routes/data'
 import uploadFileRouter from './routes/uploadFile'
 import downloadRouter from './routes/download'
+import deleteRouter from './routes/delete'
 import errorHandler from './middleware/error-handler'
 import authRouter from './routes/auth'
 
@@ -18,6 +20,7 @@ app.use(cors())
 
 app.use('/api/upload', uploadFileRouter)
 app.use('/api/download', downloadRouter)
+app.use('/api/delete', deleteRouter)
 app.use('/api/data', dataRouter)
 app.use('/api/auth', authRouter)
 app.use(errorHandler)
@@ -26,13 +29,11 @@ app.use('/', (req, res) => {
   res.status(404).end()
 })
 
-const uploadDir = './uploads'
-const carGenerated = './carGenerated'
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir)
+if (!fs.existsSync(config.uploadPath)) {
+  fs.mkdirSync(config.uploadPath)
 }
-if (!fs.existsSync(carGenerated)) {
-  fs.mkdirSync(carGenerated)
+if (!fs.existsSync(config.carPath)) {
+  fs.mkdirSync(config.carPath)
 }
 
 export default app
