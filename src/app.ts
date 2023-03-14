@@ -10,6 +10,7 @@ import downloadRouter from './routes/download'
 import deleteRouter from './routes/delete'
 import errorHandler from './middleware/error-handler'
 import authRouter from './routes/auth'
+import EventEmitter from './errors/eventEmitter'
 
 const app = express()
 

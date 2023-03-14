@@ -34,3 +34,4 @@ carGenerated/
 yarn.lock
 dist
 test
+.env
