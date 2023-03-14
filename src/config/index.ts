@@ -15,8 +15,8 @@ const baseConfig = {
   githubClientId: process.env.GITHUB_OAUTH_CLIENT_ID ?? '',
   githubClientSecret: process.env.GITHUB_OAUTH_CLIENT_SECRET ?? '',
   origin: process.env.ORIGIN_URL ?? '',
-  uploadPath: process.env.UPLOAD_PATH ?? '',
-  carPath: process.env.CAR_PATH ?? '',
+  uploadPath: process.env.UPLOAD_PATH ?? 'uploads',
+  carPath: process.env.CAR_PATH ?? 'carGenerated',
   secrets: {
     jwt: process.env.JWT_SECRET ?? '',
     jwtExp: '20d',
@@ -39,6 +39,12 @@ const envVarsSchema = Joi.object({
   }),
   githubClientSecret: Joi.string().required().messages({
     'any.required': `'GITHUB_OAUTH_CLIENT_SECRET IS MISSING'`,
+  }),
+  uploadPath: Joi.string().required().messages({
+    'any.required': `'UPLOAD_PATH IS MISSING'`,
+  }),
+  carPath: Joi.string().required().messages({
+    'any.required': `'CAR_PATH IS MISSING'`,
   }),
   secrets: Joi.object({
     jwt: Joi.string().required().messages({
