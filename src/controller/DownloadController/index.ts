@@ -3,10 +3,14 @@ import { carFileBucket } from '../../utils/constants'
 import type { NextFunction, Response } from 'express'
 import { s3Connect } from '../FileUploadController/helper/s3Connect'
 
-export const download_car = async (req: any, res: Response, next: NextFunction) => {
+export const download_car = async (
+  req: any,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const s3 = await s3Connect()
-    if(!s3){
+    if (!s3) {
       throw new Error()
     }
 

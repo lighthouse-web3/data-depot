@@ -6,7 +6,7 @@
     "start": "nodemon ./src/index.ts",
     "start-prod": "npx tsc && node ./dist/index.js",
     "build": "npx tsc",
-    "lint": "eslint --fix ./controller/**/*.js",
+    "lint": "eslint --fix ./src/**/*.ts",
     "format": "prettier --write './**/*.{js,ts,md,json}' --config ./.prettierrc"
   },
   "keywords": [],

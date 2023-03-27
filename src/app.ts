@@ -6,6 +6,7 @@ import fs from 'fs'
 import config from './config'
 import dataRouter from './routes/data'
 import uploadFileRouter from './routes/uploadFile'
+import dealRouter from './routes/deal'
 import downloadRouter from './routes/download'
 import deleteRouter from './routes/delete'
 import errorHandler from './middleware/error-handler'
@@ -24,6 +25,8 @@ app.use('/api/download', downloadRouter)
 app.use('/api/delete', deleteRouter)
 app.use('/api/data', dataRouter)
 app.use('/api/auth', authRouter)
+app.use('/api/deal', dealRouter)
+
 app.use(errorHandler)
 
 app.use('/', (req, res) => {

@@ -21,8 +21,8 @@ export const createCar = async (fileId: string, fileName: string) => {
     )
     // // Push CAR to S3
     const pushToS3 = await uploadS3(jsonResponse['PieceCid'], fileId)
-    if(!pushToS3){
-      throw new Error("Failed to save file to s3")
+    if (pushToS3 == null) {
+      throw new Error('Failed to save file to s3')
     }
 
     // Create DB record
@@ -38,7 +38,9 @@ export const createCar = async (fileId: string, fileName: string) => {
     // Remove Uploaded file
     fs.rmSync(`${config.uploadPath}/${fileId}`, { recursive: true })
     // Remove car file from disk
-    fs.rmSync(`${config.carPath}/${jsonResponse['PieceCid']}.car`, { recursive: true })
+    fs.rmSync(`${config.carPath}/${jsonResponse['PieceCid']}.car`, {
+      recursive: true,
+    })
     return
   } catch (error) {
     log(chalk.red('Error creating car: ') + error)
