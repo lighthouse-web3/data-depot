@@ -10,7 +10,7 @@ import downloadRouter from './routes/download'
 import deleteRouter from './routes/delete'
 import errorHandler from './middleware/error-handler'
 import authRouter from './routes/auth'
-import EventEmitter from './errors/eventEmitter'
+import { Response } from 'express'
 
 const app = express()
 
@@ -19,6 +19,9 @@ app.use(bodyParser.json())
 app.use(morgan('dev'))
 app.use(cors())
 
+app.get('/api/health', (req: any, res: Response) => {
+  res.send('OK')
+})
 app.use('/api/upload', uploadFileRouter)
 app.use('/api/download', downloadRouter)
 app.use('/api/delete', deleteRouter)
