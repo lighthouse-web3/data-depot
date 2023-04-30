@@ -1,5 +1,8 @@
 import { Request, Response, NextFunction } from 'express'
+import SHA256 from 'crypto-js/sha256'
 import { CustomError } from '../../errors'
+import verifyApiKey from '../../databaseOperations/verifyApiKey'
+import getUserDetails from '../../databaseOperations/getUserDetails'
 import { getGithubOathToken, getGithubUser, newToken } from './service'
 import createUserRecord from '../../databaseOperations/createUserRecord'
 
@@ -43,5 +46,39 @@ export const githubOauthHandler = async (
     })
   } catch (err: any) {
     next(err)
+  }
+}
+
+export const lighthouseAuth = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const accessToken = req.headers.authorization?.split(`Bearer `)[1]
+  const data = await verifyApiKey(SHA256(accessToken?accessToken:'').toString())
+
+  // Check if user exist
+  if(!data){
+    res.status(403).send('Forbidden')
+  } else{
+    const userDetails = await getUserDetails(data.publicKey)
+    if(!userDetails){
+      // Create User
+      const timeStamp = Date.now()
+      const saveRecord = await createUserRecord({
+        userName: data.publicKey,
+        dataUploaded: 0,
+        filesUploaded: 0,
+        createdAt: timeStamp,
+        lastUpdate: timeStamp,
+      })
+    }
+    const token = newToken({
+      avatarURL: '',
+      userName: data.publicKey
+    })
+    res.status(200).send({
+      access_token: token
+    })
   }
 }

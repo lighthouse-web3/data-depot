@@ -17,6 +17,6 @@ export default async (userName: string) => {
     console.log(
       chalk.yellow('User Detail Fetch Error: ') + chalk.red(error.message)
     )
-    return {}
+    return null
   }
 }
