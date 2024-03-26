@@ -13,7 +13,7 @@ export const createCar = async (fileId: string, fileName: string) => {
     const uploadPathFormat = config.uploadPath.replace(/ /g, '\\ ')
     const carPathFormat = config.carPath.replace(/ /g, '\\ ')
     const car: any = await execute(
-      `generate-car --single -i ${uploadPathFormat}/${fileId}/${nameFormat} -o ${carPathFormat} -p ${uploadPathFormat}/${fileId}`
+      `generate-car --single -i ${uploadPathFormat}/${fileId}/${nameFormat} -o ${carPathFormat} -p ${uploadPathFormat}/${fileId}/${nameFormat}`
     )
     const jsonResponse = JSON.parse(car)
     const carSize: any = await execute(
