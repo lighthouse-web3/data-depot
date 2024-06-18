@@ -8,9 +8,5 @@ services:
     container_name: data_depot
     ports:
       - "8000:8000"
-    environment:
-      UPLOAD_PATH: /data/uploads
-      CAR_PATH: /data/cars
     volumes:
-      - upload_data:/data/uploads
-      - car_data:/data/cars      
+      - ~/data:/data
