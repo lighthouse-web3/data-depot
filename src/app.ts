@@ -8,10 +8,11 @@ import dataRouter from './routes/data'
 import uploadFileRouter from './routes/uploadFile'
 import downloadRouter from './routes/download'
 import deleteRouter from './routes/delete'
+import { deleteOldFiles } from './controller/deleteController/deleteOldFile'
 import errorHandler from './middleware/error-handler'
 import authRouter from './routes/auth'
 import { Response } from 'express'
-
+import cron from 'node-cron'
 const app = express()
 
 app.use(bodyParser.urlencoded({ extended: false }))
@@ -39,5 +40,11 @@ if (!fs.existsSync(config.uploadPath)) {
 if (!fs.existsSync(config.carPath)) {
   fs.mkdirSync(config.carPath)
 }
+
+// running job every midnight on sunday
+cron.schedule('0 0 * * 0', function () {
+  console.log('running delete file cron')
+  deleteOldFiles()
+})
 
 export default app
